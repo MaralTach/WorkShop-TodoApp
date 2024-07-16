@@ -24,6 +24,7 @@ app.all('/', (req, res) => {
     })
 })
 
+app.use('/todo',require('./src/router/todo'))
 
 
 app.use(require('./src/middlewares/errorHandler'))
