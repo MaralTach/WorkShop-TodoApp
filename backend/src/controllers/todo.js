@@ -1,6 +1,8 @@
 'use strict';
 
+const CustomError = require('../helper/customError');
 const Todo = require('../models/todo')
+const mongoose = require('mongoose')
 
 module.exports = {
     list: async (req, res) => {
@@ -24,7 +26,15 @@ module.exports = {
     },
 
     read: async (req, res) => {
+
+        const isIdValid = mongoose.Types.ObjectId.isValid(req.params.id)
+
+        if(!isIdValid) throw new CustomError('Id is not valid', 400) 
+
         const data = await Todo.findOne({ _id: req.params.id });
+
+        if(!data) throw new CustomError('Data is not found', 404) 
+
 
         res.status(200).send({
             isError: false,
@@ -52,8 +62,7 @@ module.exports = {
         const { deletedCount } = await Todo.deleteOne({ _id: req.params.id });
 
 
-        if (!deletedCount) throw new Error('Something went wrong!', 404)
-
+        if (!deletedCount) throw new CustomError('Something went wrong!', 404)
 
         res.status(204).send({
             isError: false,

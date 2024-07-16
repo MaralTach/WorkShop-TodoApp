@@ -29,7 +29,9 @@ const EditTutorial = ({ editItem, getTutorials }) => {
   console.log(description);
 
   const editTutor = async tutor => {
-    const BASE_URL = "https://tutorial-api.fullstack.clarusway.com/tutorials";
+    // const BASE_URL = "https://tutorial-api.fullstack.clarusway.com/tutorials";
+    const BASE_URL = "http://127.0.0.1:8000/todo"
+
 
     try {
       await axios.put(`${BASE_URL}/${id}/`, tutor);
